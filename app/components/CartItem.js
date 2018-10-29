@@ -1,7 +1,10 @@
 import React, { PureComponent } from 'react'
 import { Text, View, Image, TouchableOpacity, StyleSheet } from 'react-native'
+import {connect} from 'react-redux'
+import { removeItem } from '../actions/cartActions'
 
-export default class CartItem extends PureComponent {
+
+class CartItem extends PureComponent {
     render() {
         return (
             <View style={{
@@ -45,7 +48,7 @@ export default class CartItem extends PureComponent {
                 </View>
                 <View style={{ flex: 3, alignItems: 'flex-end', }}>
                     <View>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress = {() => this.props.removeItem(this.props.cartItem)}>
                             <Image
                                 style={{ height: 20, width: 20 }}
                                 source={require('../assets/delete.png')}
@@ -59,6 +62,8 @@ export default class CartItem extends PureComponent {
         )
     }
 }
+
+export default connect(null, {removeItem})(CartItem)
 
 const styles = StyleSheet.create({
 

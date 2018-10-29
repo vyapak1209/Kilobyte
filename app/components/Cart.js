@@ -76,6 +76,7 @@ class Cart extends Component {
                                 return (
                                     <View>
                                         <CartItem
+                                            cartItem = {cartItem.item}
                                             title={cartItem.item.title}
                                             image={cartItem.item.image.imageUrl}
                                             quantity={cartItem.qty}
