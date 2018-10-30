@@ -47,7 +47,7 @@ class SearchBar extends Component {
                             })
                         }}
                         value={this.state.query}
-                        onSubmitEditing={() => this.props.searchProducts(this.props.accessToken, this.state.query)}
+                        onSubmitEditing={() => this.props.searchProducts(this.props.accessToken, this.state.query, null)}
                         placeholder='Search Items'
                     />
                     <View style={{

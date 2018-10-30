@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { searchProducts } from '../actions/searchActions'
 import { connect } from 'react-redux'
-import { View, TouchableOpacity, Text, FlatList, ScrollView, ToastAndroid, Image } from 'react-native'
+import { View, TouchableOpacity, Text, FlatList, ScrollView, ToastAndroid, Image, } from 'react-native'
 import ProductItem from './ProductItem'
 
 
@@ -12,7 +12,9 @@ class ProductList extends Component {
         console.log('props in productList ', this.props)
         return (
             <View style={{ flex: 1 }}>
-                <ScrollView>
+                <ScrollView
+                    contentContainerStyle = {{flex: 1}}
+                >
                     {(this.props.productList.length > 0) ?
                         <FlatList
                             data={this.props.productList.map((item) => {
@@ -27,6 +29,8 @@ class ProductList extends Component {
                                     />
                                 )
                             }}
+                            onEndReachedThreshold = {0.9}
+                            onEndReached = {() => this.props.searchProducts(this.props.accessToken, null, this.props.nextUrl)}
                         /> : <View>
                             <View style={{ marginTop: 100, flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
                                 <Image
@@ -46,6 +50,7 @@ class ProductList extends Component {
 }
 
 const mapStateToProps = state => ({
+    accessToken: state.auth.accessToken,
     productList: state.search.productList,
     nextUrl: state.search.nextUrl,
 })

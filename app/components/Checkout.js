@@ -112,28 +112,31 @@ class Checkout extends Component {
                 </Text>
                     <View style={styles.container}>
 
-                        <TextInput
-                            style={styles.textFieldStyle}
-                            onChangeText={(text) => this.setState({
-                                firstName: text
-                            })}
-                            autoCapitalize='none'
-                            underlineColorAndroid='transparent'
-                            placeholder="Firstname"
-                            value={this.state.firstName}
+                        <View style={{ flexDirection: 'row' }}>
+                            <TextInput
+                                style={{...styles.textFieldStyle, width: '50%'}}
+                                onChangeText={(text) => this.setState({
+                                    firstName: text
+                                })}
+                                autoCapitalize='none'
+                                underlineColorAndroid='transparent'
+                                placeholder="Firstname"
+                                value={this.state.firstName}
 
-                        />
-                        <TextInput
-                            style={styles.textFieldStyle}
-                            onChangeText={(text) => this.setState({
-                                lastName: text
-                            })}
-                            autoCapitalize='none'
-                            underlineColorAndroid='transparent'
-                            placeholder="Lastname"
-                            value={this.state.lastName}
+                            />
+                            <TextInput
+                                style={{...styles.textFieldStyle, width: '50%'}}
+                                onChangeText={(text) => this.setState({
+                                    lastName: text
+                                })}
+                                autoCapitalize='none'
+                                underlineColorAndroid='transparent'
+                                placeholder="Lastname"
+                                value={this.state.lastName}
 
-                        />
+                            />
+                        </View>
+
                         <TextInput
                             style={styles.textFieldStyle}
                             onChangeText={(text) => this.setState({
