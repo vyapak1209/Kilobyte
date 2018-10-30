@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View, TouchableOpacity, TextInput, ScrollView, StyleSheet, Dimensions } from 'react-native'
+import { Text, View, TouchableOpacity, TextInput, ScrollView, StyleSheet, Dimensions, Image } from 'react-native'
 import { manageAddress } from '../actions/checkoutActions'
 import { connect } from 'react-redux'
 
@@ -23,18 +23,37 @@ class Checkout extends Component {
 
     }
 
-    static navigationOptions = {
-        title: 'Checkout',
+    static navigationOptions = ({ navigation }) => {
+        return {
+            title: 'Checkout',
 
-        headerStyle: {
-            backgroundColor: '#ee5861',
-        },
-        headerTintColor: '#fff',
-        headerTitleStyle: {
-            color: '#fff',
-            fontWeight: 'bold'
+            headerStyle: {
+                backgroundColor: '#ee5861',
+            },
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+                color: '#fff',
+                fontWeight: 'bold'
+            },
+            headerLeft: (
+                <TouchableOpacity style={{ padding: 5 }} onPress={navigation.getParam('goBack')}>
+                    <Image
+                        source={require('../assets/back.png')}
+                        style={{ marginLeft: 10, height: 25, width: 25 }}
+                        resizeMode="contain"
+                    />
+                </TouchableOpacity>
+            ),
         }
 
+    }
+
+    componentDidMount() {
+        this.props.navigation.setParams({ goBack: this.goBack.bind(this) });
+    }
+
+    goBack() {
+        this.props.navigation.goBack();
     }
 
     onContinue() {
@@ -191,7 +210,7 @@ class Checkout extends Component {
 
                     <View>
                         <TouchableOpacity onPress={() => this.onContinue()} activeOpacity={0.8} style={{ height: 40, width: '100%', alignItems: 'center', justifyContent: 'center', backgroundColor: '#ee5861', borderRadius: 10, marginBottom: 10 }}>
-                            <Text style={{ fontSize: 12, fontWeight: 'bold', color: '#fff' }}>
+                            <Text style={{ fontSize: 12, fontWeight: 'bold', color: '#fff', elevation: 2 }}>
                                 CONTINUE
                             </Text>
                         </TouchableOpacity>

@@ -8,9 +8,9 @@ import SearchBar from './SearchBar'
 
 class Home extends Component {
 
-    componentWillMount() {
-        this.props.authorizeApp()
-    }
+    // componentWillMount() {
+    //     this.props.authorizeApp()
+    // }
 
     static navigationOptions = {
         header: null,
@@ -22,7 +22,6 @@ class Home extends Component {
             <View style = {{height: '100%'}}>
                 <SearchBar
                     navigation = {this.props.navigation}
-                    accessToken = {this.props.accessToken}
                 />
                 <ProductList
                     navigation = {this.props.navigation}

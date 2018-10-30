@@ -85,4 +85,8 @@ const styles = StyleSheet.create({
     }
 })
 
-export default connect(null, { searchProducts })(SearchBar)
+const mapStateToProps = state => ({
+    accessToken: state.auth.accessToken
+})
+
+export default connect(mapStateToProps, { searchProducts })(SearchBar)

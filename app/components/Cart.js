@@ -1,43 +1,67 @@
 import React, { Component } from 'react'
-import { Text, View, FlatList, ScrollView, TouchableOpacity, StyleSheet } from 'react-native'
+import { Text, View, FlatList, ScrollView, TouchableOpacity, StyleSheet, Image, ToastAndroid } from 'react-native'
 import { connect } from 'react-redux'
 import CartItem from './CartItem'
 
 class Cart extends Component {
 
-    static navigationOptions = {
-        title: 'Cart',
+    static navigationOptions = ({ navigation }) => {
+        return {
+            title: 'Cart',
 
-        headerStyle: {
-            backgroundColor: '#ee5861',
-        },
-        headerTintColor: '#fff',
-        headerTitleStyle: {
-            color: '#fff',
-            fontWeight: 'bold'
+            headerStyle: {
+                backgroundColor: '#ee5861',
+            },
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+                color: '#fff',
+                fontWeight: 'bold'
+            },
+            headerLeft: (
+                <TouchableOpacity style={{ padding: 5 }} onPress={navigation.getParam('goBack')}>
+                    <Image
+                        source={require('../assets/back.png')}
+                        style={{ marginLeft: 10, height: 25, width: 25 }}
+                        resizeMode="contain"
+                    />
+                </TouchableOpacity>
+            ),
         }
 
     }
 
-    checkout(){
+    componentDidMount() {
+        this.props.navigation.setParams({ goBack: this.goBack.bind(this) });
+    }
 
-        let cartObj = {
-            cartItems: [],
-            totalPrice: 0,
-            totalQty: 0,
-            totalDiscount: 0,
+    goBack() {
+        this.props.navigation.goBack();
+    }
+
+    checkout() {
+
+        if (this.props.cartItems.length > 0) {
+            let cartObj = {
+                cartItems: [],
+                totalPrice: 0,
+                totalQty: 0,
+                totalDiscount: 0,
+            }
+
+            this.props.cartItems.forEach((element) => {
+                cartObj.cartItems.push(element.item)
+            })
+
+            cartObj.totalPrice = this.props.cartTotalPrice
+
+            cartObj.totalQty = this.props.cartTotalQty
+
+            console.log("cart object ", cartObj)
+            this.props.navigation.navigate('CheckoutPage', { cartObj })
+        }else{
+            ToastAndroid.show('Add items to your cart!!', ToastAndroid.SHORT)
         }
 
-        this.props.cartItems.forEach((element) => {
-            cartObj.cartItems.push(element.item)
-        })
-
-        cartObj.totalPrice = this.props.cartTotalPrice
-
-        cartObj.totalQty = this.props.cartTotalQty
-
-        console.log("cart object ", cartObj)
-        this.props.navigation.navigate('CheckoutPage', {cartObj})
     }
 
     render() {
@@ -50,7 +74,7 @@ class Cart extends Component {
                         <View style={{ alignItems: 'center', paddingTop: 100, backgroundColor: '#f3f3f3' }}>
                             <Text style={{ fontSize: 18 }}>
                                 There are no products in your Cart!
-                            </Text>
+                                </Text>
                         </View> : <View />}
                 </View>
                 <View style={{ flex: 3 }}>
@@ -67,8 +91,8 @@ class Cart extends Component {
                             }} >
                                 <Text style={{ fontSize: 13, color: 'black', fontWeight: 'bold' }}>
                                     ITEMS ({this.props.cartTotalQty})
-                                </Text>
-                            </View> : <View/>
+                                    </Text>
+                            </View> : <View />
                         }
 
                         {
@@ -76,7 +100,7 @@ class Cart extends Component {
                                 return (
                                     <View>
                                         <CartItem
-                                            cartItem = {cartItem.item}
+                                            cartItem={cartItem.item}
                                             title={cartItem.item.title}
                                             image={cartItem.item.image.imageUrl}
                                             quantity={cartItem.qty}
@@ -95,7 +119,7 @@ class Cart extends Component {
                         }} >
                             <Text style={{ fontSize: 13, color: '#697071', fontWeight: '200' }}>
                                 PRICE DETAILS
-                            </Text>
+                                </Text>
                         </View>
 
                         <View style={styles.totalView}>
@@ -108,7 +132,7 @@ class Cart extends Component {
                                         <Text style={styles.totalText}> USD {this.props.cartTotalPrice} </Text>
                                     </View>
                                 </View>
-                                
+
                                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                                     <View>
                                         <Text style={styles.totalText}> Cart Discount : </Text>
@@ -117,7 +141,7 @@ class Cart extends Component {
                                         <Text style={styles.totalText}> USD 0 </Text>
                                     </View>
                                 </View>
-                                
+
                                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                                     <View>
                                         <Text style={{
@@ -181,11 +205,11 @@ class Cart extends Component {
                             </Text>
                             <Text style={{ fontSize: 12, fontWeight: 'bold', color: '#526CD0' }}>
                                 VIEW DETAILS
-                            </Text>
+                                </Text>
                         </View>
                     </TouchableOpacity>
 
-                    <TouchableOpacity onPress = {() => this.checkout()} activeOpacity={1} style={{
+                    <TouchableOpacity onPress={() => this.checkout()} activeOpacity={1} style={{
                         elevation: 2,
                         width: '60%',
                         justifyContent: 'center',
@@ -196,7 +220,7 @@ class Cart extends Component {
 
                         <Text style={{ color: 'white', fontWeight: 'bold' }}>
                             CHECKOUT
-                        </Text>
+                            </Text>
 
                     </TouchableOpacity>
                 </View>

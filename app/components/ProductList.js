@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import { searchProducts } from '../actions/searchActions'
 import { connect } from 'react-redux'
-import { View, TouchableOpacity, Text, FlatList, ScrollView } from 'react-native'
+import { View, TouchableOpacity, Text, FlatList, ScrollView, ToastAndroid, Image } from 'react-native'
 import ProductItem from './ProductItem'
 
-class ProductList extends Component {
 
+class ProductList extends Component {
 
     render() {
         console.log('productList ', this.props.productList)
@@ -19,7 +19,7 @@ class ProductList extends Component {
                                 return item
                             })}
                             keyExtractor={(item, index) => index.toString()}
-                            renderItem={({item}) => {
+                            renderItem={({ item }) => {
                                 return (
                                     <ProductItem
                                         product={item}
@@ -27,7 +27,18 @@ class ProductList extends Component {
                                     />
                                 )
                             }}
-                        /> : <View />}
+                        /> : <View>
+                            <View style={{ marginTop: 100, flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+                                <Image
+                                    source={require('../assets/search.png')}
+                                    style={{ height: 100, width: 100, marginBottom: 10 }}
+                                    resizeMode='contain'
+                                />
+                                <Text style={{ margin: 5 }}>Powered by Ebay</Text>
+                                <Text style={{ margin: 5 }}>Search for products</Text>
+                            </View>
+                        </View>
+                    }
                 </ScrollView>
             </View>
         )

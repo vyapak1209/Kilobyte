@@ -1,8 +1,7 @@
 import React from 'react';
-import ReactNative from 'react-native';
 import {
     View, StyleSheet, Image, Text,
-    TouchableHighlight, Dimensions, TouchableOpacity, Picker, Platform
+    TouchableHighlight, Dimensions, TouchableOpacity, Picker, Platform, ToastAndroid
 } from 'react-native';
 
 import {connect} from 'react-redux'
@@ -21,6 +20,7 @@ class ProductItem extends React.Component {
     onAddToCart() {
         console.log('LOL')
         this.props.addToCart(this.props.product, 1)
+        ToastAndroid.show('Item added to cart', ToastAndroid.SHORT);
     }
 
     render() {
