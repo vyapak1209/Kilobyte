@@ -3,6 +3,8 @@ import Home from '../components/Home'
 import Cart from '../components/Cart'
 import Checkout from '../components/Checkout'
 import SplashScreen from '../components/SplashScreen';
+import MapPage from '../components/MapPage'
+
 
 export const RootStack = createStackNavigator({
     HomePage: {
@@ -19,6 +21,10 @@ export const RootStack = createStackNavigator({
 
     SplashPage: {
         screen: SplashScreen
+    },
+
+    MapPage: {
+        screen: MapPage
     }
 }, {
     initialRouteName: 'SplashPage',

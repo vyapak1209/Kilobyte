@@ -1,14 +1,36 @@
-import {DELIVER_AT} from '../actions/types'
+import { DELIVER_AT, SET_MAP_POSITION } from '../actions/types'
 import Geocoder from 'react-native-geocoding'
 
-export const manageAddress = () => dispatch => {
+export const setMapPosition = (lat, lang) => dispatch => {
+    if (lat === null && lang === null) {
+        navigator.geolocation.getCurrentPosition((position) => {
+            dispatch({
+                type: SET_MAP_POSITION,
+                payload: position
+            })
+        })
+
+    } else {
+        let position = {
+            coords: {
+                latitude: lat,
+                longitude: lang
+            }
+        }
+        dispatch({
+            type: SET_MAP_POSITION,
+            payload: position
+        })
+    }
+}
+
+export const manageAddress = (lat, lang) => dispatch => {
 
     Geocoder.init('AIzaSyBJN8TNUQltSveXZrzHlhhfcw30fzhibBc')
 
-    navigator.geolocation.getCurrentPosition((position) => {
-        console.log('Position ', position)
-        
-        Geocoder.from(position.coords.latitude, position.coords.longitude)
+
+
+    Geocoder.from(lat, lang)
         .then(json => {
             console.log(json)
 
@@ -22,28 +44,28 @@ export const manageAddress = () => dispatch => {
 
             json.results[0].address_components.forEach((element) => {
                 console.log("address component ", element.types[0])
-                
-                if(element.types[0] === 'premise' || element.types[0] === 'neighborhood' || element.types[0] === 'locality' || element.types[0] === 'political') {
+
+                if (element.types[0] === 'premise' || element.types[0] === 'neighborhood' || element.types[0] === 'locality' || element.types[0] === 'political') {
                     addressObj.addressLine += element.long_name + ', '
-                } 
-                if(element.types[0] === 'administrative_area_level_2') {
+                }
+                if (element.types[0] === 'administrative_area_level_2') {
                     addressObj.city = element.long_name
-                } 
-                if(element.types[0] === 'administrative_area_level_1') {
+                }
+                if (element.types[0] === 'administrative_area_level_1') {
                     addressObj.state = element.long_name
                 }
-                if(element.types[0] === 'country') {
+                if (element.types[0] === 'country') {
                     addressObj.country = element.long_name
-                } 
-                if(element.types[0] === 'route') {
+                }
+                if (element.types[0] === 'route') {
                     addressObj.addressLine += element.long_name + ", "
-                } 
-                if(element.types[0] === 'postal_code') {
+                }
+                if (element.types[0] === 'postal_code') {
                     addressObj.pincode += element.long_name
-                } 
-                
+                }
+
             })
-            
+
             console.log("Address object ", addressObj)
 
             dispatch({
@@ -54,8 +76,8 @@ export const manageAddress = () => dispatch => {
         .catch(error => console.warn(error));
 
 
-    })
-    
+
+
     //navigator.geolocation.getCurrentPosition((position) => console.log('location', position), (error) => console.log(error))
 
 }

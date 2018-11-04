@@ -17,7 +17,7 @@ class SplashScreen extends Component {
 
         setTimeout(() => {
             this.props.navigation.navigate('HomePage')
-        }, 500);
+        }, 2000);
 
     }
 

@@ -56,6 +56,13 @@ class Checkout extends Component {
         this.props.navigation.goBack();
     }
 
+    openMaps() {
+        console.log("Yaha pe main maps kholunga, haha");
+
+        this.props.navigation.navigate('MapPage')
+
+    }
+
     onContinue() {
         console.log("Address state ", this.state)
         if (this.state.firstName === '' ||
@@ -114,7 +121,7 @@ class Checkout extends Component {
 
                         <View style={{ flexDirection: 'row' }}>
                             <TextInput
-                                style={{...styles.textFieldStyle, width: '50%'}}
+                                style={{ ...styles.textFieldStyle, width: '50%' }}
                                 onChangeText={(text) => this.setState({
                                     firstName: text
                                 })}
@@ -125,7 +132,7 @@ class Checkout extends Component {
 
                             />
                             <TextInput
-                                style={{...styles.textFieldStyle, width: '50%'}}
+                                style={{ ...styles.textFieldStyle, width: '50%' }}
                                 onChangeText={(text) => this.setState({
                                     lastName: text
                                 })}
@@ -204,7 +211,7 @@ class Checkout extends Component {
                     </View>
 
                     <View style={{ width: '100%', alignItems: 'center', justifyContent: 'center' }}>
-                        <TouchableOpacity onPress={() => this.props.manageAddress()}>
+                        <TouchableOpacity onPress={() => this.openMaps()}>
                             <Text style={{ fontSize: 12, fontWeight: 'bold', color: '#526CD0', marginBottom: 10 }}>
                                 GET CURRENT LOCATION
                             </Text>
@@ -219,7 +226,6 @@ class Checkout extends Component {
                         </TouchableOpacity>
                     </View>
                 </ScrollView>
-
             </View>
         )
     }
